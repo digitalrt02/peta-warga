@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -69,28 +69,29 @@ document.addEventListener("DOMContentLoaded", function() {
         style: {
             'version': 8,
             'sources': {
-                'satelit-bersih': {
+                'satelit-google': {
                     'type': 'raster',
                     'tiles': [
-                        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+                        // PERBAIKAN: Menggunakan tile server satelit Google agar bisa super zoom
+                        'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
                     ],
                     'tileSize': 256,
-                    'attribution': '© Esri World Imagery'
+                    'attribution': '© Google Maps Satellite'
                 }
             },
             'layers': [
                 { 
                     'id': 'satelit-layer', 
                     'type': 'raster', 
-                    'source': 'satelit-bersih', 
+                    'source': 'satelit-google', 
                     'minzoom': 0, 
-                    'maxzoom': 24 
+                    'maxzoom': 24 // Ditingkatkan ke level maksimal render raster
                 }
             ]
         },
         center: [107.5279, -6.8744], 
-        zoom: 14,
-        maxZoom: 20,              
+        zoom: 16,
+        maxZoom: 23, // PERBAIKAN: Dari batas awal 20 dibobol menjadi level 23 untuk kedalaman jarak dekat        
         pitch: 60,                  
         bearing: -10,               
         antialias: true
@@ -183,7 +184,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
 
                 if (hasValidData) {
-                    map.fitBounds(bounds, { padding: 80, maxZoom: 16 });
+                    // PERBAIKAN: maxZoom saat fitBounds dinaikkan agar tidak menjauh secara otomatis di awal beban data
+                    map.fitBounds(bounds, { padding: 80, maxZoom: 18 });
                 }
             })
             .catch(error => console.error('Gagal mengambil data dari Google Sheets Web API:', error));
