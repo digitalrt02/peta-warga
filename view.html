@@ -39,7 +39,7 @@
         <div class="map-header-no-card" style="position: absolute; top: 15px; left: 20px; right: 20px; z-index: 1000;">
             <div class="row align-items-center">
                 <div class="col-md-12">
-                    <h6 class="m-0 font-weight-bold" style="color: #2d3436; text-shadow: 1px 1px 4px white; font-size: 1.1rem;">
+                    <h6 class="m-0 font-weight-bold" style="color: #ffffff; text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9); font-size: 1.2rem;">
                         <i class="fa fa-map-marked-alt mr-2" style="color: #009cdc;"></i> Peta Warga RT.02 Padasuka Cimahi
                     </h6>
                 </div>
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 'satelit-google': {
                     'type': 'raster',
                     'tiles': [
-                        // PERBAIKAN: Menggunakan tile server satelit Google agar bisa super zoom
+                        // Menggunakan server satelit Google agar bisa super zoom jarak dekat
                         'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
                     ],
                     'tileSize': 256,
@@ -85,13 +85,13 @@ document.addEventListener("DOMContentLoaded", function() {
                     'type': 'raster', 
                     'source': 'satelit-google', 
                     'minzoom': 0, 
-                    'maxzoom': 24 // Ditingkatkan ke level maksimal render raster
+                    'maxzoom': 24 
                 }
             ]
         },
         center: [107.5279, -6.8744], 
         zoom: 16,
-        maxZoom: 23, // PERBAIKAN: Dari batas awal 20 dibobol menjadi level 23 untuk kedalaman jarak dekat        
+        maxZoom: 23, // Membuka batas zoom hingga level 23 agar bisa sangat dekat ke rumah         
         pitch: 60,                  
         bearing: -10,               
         antialias: true
@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
 
                 if (hasValidData) {
-                    // PERBAIKAN: maxZoom saat fitBounds dinaikkan agar tidak menjauh secara otomatis di awal beban data
+                    // Batas zoom otomatis saat data pertama kali dimuat disesuaikan agar ideal
                     map.fitBounds(bounds, { padding: 80, maxZoom: 18 });
                 }
             })
